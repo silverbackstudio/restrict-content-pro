@@ -118,3 +118,24 @@ function rcp_locate_template( $template_names, $load = false, $require_once = tr
 
 	return $located;
 }
+
+/**
+ * Determines if a template file has been moved to the theme folder
+ *
+ * @since  v2.5
+ * @param  string $file_name Template file(s) to search for
+ * @return bool True if it exists in the theme folder
+ */
+function rcp_has_theme_template_file( $file_name = '' ) {
+
+	$ret = false;
+
+	// Check child theme first
+	if ( file_exists( trailingslashit( get_stylesheet_directory() ) . 'rcp/' . $file_name ) ) {
+		$ret = true;
+	} elseif ( file_exists( trailingslashit( get_template_directory() ) . 'rcp/' . $file_name ) ) {
+		$ret = true;
+	}
+
+	return $ret;
+}
