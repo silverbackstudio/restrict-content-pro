@@ -24,7 +24,6 @@ function rcp_admin_scripts( $hook ) {
 	if( in_array( $hook, $pages ) ) {
 		wp_localize_script( 'rcp-admin-scripts', 'rcp_vars', array(
 				'rcp_member_nonce'    => wp_create_nonce( 'rcp_member_nonce' ),
-				'revoke_access'       => __( 'Are you sure you wish to revoke this member\'s access? This will not cancel their payment plan.', 'rcp' ),
 				'cancel_user'         => __( 'Are you sure you wish to cancel this member\'s subscription?', 'rcp' ),
 				'delete_subscription' => __( 'If you delete this subscription, all members registered with this level will be canceled. Proceed?', 'rcp' ),
 				'delete_payment'      => __( 'Are you sure you want to delete this payment? This action is irreversible. Proceed?', 'rcp' ),
