@@ -67,7 +67,7 @@ function rcp_settings_page() {
 									<?php wp_nonce_field( 'rcp_deactivate_license', 'rcp_deactivate_license' ); ?>
 									<input type="submit" class="button-secondary" name="rcp_license_deactivate" value="<?php _e('Deactivate License', 'rcp'); ?>"/>
 									<span style="color:green;"><?php _e('active', 'rcp' ); ?></span>
-								<?php } elseif( ! empty( $rcp_options['license_key'] ) ) { ?>
+								<?php } elseif( $status !== 'valid' ) { ?>
 									<input type="submit" class="button-secondary" name="rcp_license_activate" value="<?php _e('Activate License', 'rcp' ); ?>"/>
 								<?php } ?>
 								<p class="description"><?php printf( __( 'Enter license key for Restrict Content Pro. This is required for automatic updates and <a href="%s">support</a>.', 'rcp' ), 'http://restrictcontentpro.com/support' ); ?></p>
