@@ -30,13 +30,6 @@ jQuery(document).ready(function($) {
 		var dateFormat = 'yy-mm-dd';
 		$('.rcp-datepicker').datepicker({dateFormat: dateFormat});
 	}
-	$('.rcp_revoke').click(function() {
-		if(confirm(rcp_vars.revoke_access)) {
-			return true;
-		} else {
-			return false;
-		}
-	});
 	$('.rcp_cancel').click(function() {
 		if(confirm(rcp_vars.cancel_user)) {
 			return true;
