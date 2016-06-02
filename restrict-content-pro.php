@@ -73,7 +73,7 @@ global $rcp_db_name;
 $rcp_db_name = rcp_get_levels_db_name();
 
 global $rcp_db_version;
-$rcp_db_version = '1.5';
+$rcp_db_version = '1.6';
 
 global $rcp_discounts_db_name;
 $rcp_discounts_db_name = rcp_get_discounts_db_name();
@@ -85,7 +85,7 @@ global $rcp_payments_db_name;
 $rcp_payments_db_name = rcp_get_payments_db_name();
 
 global $rcp_payments_db_version;
-$rcp_payments_db_version = '1.4';
+$rcp_payments_db_version = '1.5';
 
 /* settings page globals */
 global $rcp_members_page;
@@ -191,7 +191,8 @@ if( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 	// admin only includes
 	if( is_admin() ) {
 
-		include( RCP_PLUGIN_DIR . 'includes/upgrades.php' );
+		include( RCP_PLUGIN_DIR . 'includes/admin/upgrades.php' );
+		include( RCP_PLUGIN_DIR . 'includes/admin/class-rcp-upgrades.php' );
 		include( RCP_PLUGIN_DIR . 'includes/admin/admin-pages.php' );
 		include( RCP_PLUGIN_DIR . 'includes/admin/admin-notices.php' );
 		include( RCP_PLUGIN_DIR . 'includes/admin/admin-ajax-actions.php' );

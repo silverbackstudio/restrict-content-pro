@@ -3,13 +3,17 @@
 function rcp_check_if_upgrade_needed() {
 	global $rcp_db_version, $rcp_discounts_db_version, $rcp_payments_db_version;
 
+	if( version_compare( RCP_PLUGIN_VERSION, '2.6', '>=' ) && version_compare( get_option( 'rcp_version' ), '2.5', '>=' ) ) {
+
+		// New RCP_Upgrades class was introduced with 2.6. See https://github.com/restrictcontentpro/restrict-content-pro/issues/511
+
+		return false;
+	}
+
 	if( version_compare( $rcp_db_version, get_option( 'rcp_db_version' ), '>' ) ) {
 		return true;
 	}
 	if( version_compare( $rcp_discounts_db_version, get_option( 'rcp_discounts_db_version' ), '>' ) ) {
-		return true;
-	}
-	if( version_compare( $rcp_payments_db_version, get_option( 'rcp_payments_db_version' ), '>' ) ) {
 		return true;
 	}
 	if( version_compare( $rcp_payments_db_version, get_option( 'rcp_payments_db_version' ), '>' ) ) {

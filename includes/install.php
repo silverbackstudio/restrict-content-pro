@@ -11,7 +11,7 @@ function rcp_options_install() {
 	if ($wpdb->get_var( "show tables like '$rcp_db_name'" ) != $rcp_db_name ) {
 		$sql = "CREATE TABLE " . $rcp_db_name . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		name tinytext NOT NULL,
+		name varchar(200) NOT NULL,
 		description longtext NOT NULL,
 		duration smallint NOT NULL,
 		duration_unit tinytext NOT NULL,
@@ -19,9 +19,11 @@ function rcp_options_install() {
 		fee tinytext NOT NULL,
 		list_order mediumint NOT NULL,
 		level mediumint NOT NULL,
-		status tinytext NOT NULL,
+		status varchar(12) NOT NULL,
 		role tinytext NOT NULL,
-		UNIQUE KEY id (id)
+		PRIMARY KEY id (id),
+		KEY name (name),
+		KEY status (status)
 		) CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -44,7 +46,7 @@ function rcp_options_install() {
 		status tinytext NOT NULL,
 		expiration mediumtext NOT NULL,
 		subscription_id mediumint NOT NULL,
-		UNIQUE KEY id (id)
+		PRIMARY KEY id (id)
 		) CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -57,15 +59,20 @@ function rcp_options_install() {
 	if( $wpdb->get_var( "show tables like '$rcp_payments_db_name'" ) != $rcp_payments_db_name ) {
 		$sql = "CREATE TABLE " . $rcp_payments_db_name . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
-		subscription mediumtext NOT NULL,
+		subscription varchar(200) NOT NULL,
 		date datetime NOT NULL,
 		amount mediumtext NOT NULL,
 		user_id mediumint NOT NULL,
 		payment_type tinytext NOT NULL,
-		subscription_key mediumtext NOT NULL,
-		transaction_id tinytext NOT NULL,
-		status varchar(200) NOT NULL,
-		UNIQUE KEY id (id)
+		subscription_key varchar(32) NOT NULL,
+		transaction_id varchar(64) NOT NULL,
+		status varchar(12) NOT NULL,
+		PRIMARY KEY id (id),
+		KEY level (subscription),
+		KEY user (user_id),
+		KEY key (subscription_key),
+		KEY txn (transaction_id),
+		KEY status (status)
 		) CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
