@@ -118,7 +118,7 @@ function rcp_payments_page() {
 								<?php do_action( 'rcp_payments_page_table_column', $payment->id ); ?>
 								<?php if( current_user_can( 'rcp_manage_payments' ) ) : ?>
 									<td>
-										<a href="<?php echo rcp_get_pdf_download_url( $payment->id ); ?>" class="rcp-payment-invoice"><?php _e( 'Download Invoice', 'rcp' ); ?></a>
+										<a href="<?php echo rcp_get_pdf_download_url( $payment->id ); ?>" class="rcp-payment-invoice"><?php _e( 'View Invoice', 'rcp' ); ?></a>
 										<span>&nbsp;|&nbsp;</span>
 										<a href="<?php echo esc_url( add_query_arg( array( 'payment_id' => $payment->id, 'view' => 'edit-payment' ), admin_url( 'admin.php?page=rcp-payments' ) ) ); ?>" class="rcp-edit-payment"><?php _e( 'Edit', 'rcp' ); ?></a>
 										<span>&nbsp;|&nbsp;</span>
