@@ -2,13 +2,13 @@
 
 namespace Stripe;
 
-class Event extends ApiResource
+class OrderReturn extends ApiResource
 {
     /**
-     * @param string $id The ID of the event to retrieve.
+     * @param string $id The ID of the OrderReturn to retrieve.
      * @param array|string|null $opts
      *
-     * @return Event
+     * @return Order
      */
     public static function retrieve($id, $opts = null)
     {
@@ -19,7 +19,7 @@ class Event extends ApiResource
      * @param array|null $params
      * @param array|string|null $opts
      *
-     * @return Collection of Events
+     * @return Collection of OrderReturns
      */
     public static function all($params = null, $opts = null)
     {
