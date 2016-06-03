@@ -57,7 +57,7 @@ function rcp_admin_help_url() {
 add_action( 'admin_head', 'rcp_admin_help_url' );
 
 function rcp_admin_styles( $hook ) {
-	global $rcp_members_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_export_page, $rcp_logs_page, $rcp_help_page, $rcp_tools_page;
+	global $rcp_members_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_export_page, $rcp_logs_page, $rcp_help_page, $rcp_tools_page, $rcp_add_ons_page;
 	$pages = array(
 		$rcp_members_page,
 		$rcp_subscriptions_page,
@@ -69,6 +69,7 @@ function rcp_admin_styles( $hook ) {
 		$rcp_logs_page,
 		$rcp_help_page,
 		$rcp_tools_page,
+        $rcp_add_ons_page,
 		'post.php',
 		'edit.php',
 		'post-new.php'

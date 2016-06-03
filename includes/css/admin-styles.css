@@ -96,6 +96,45 @@ table.rcp-table th,
 table.rcp-table td { text-align: left; border: 1px solid #eee; color: #666; padding: 0.4em; font-size: 90%; word-break: break-all; }
 table.rcp-table th { background: #fafafa; font-weight: bold; }
 
+/* Add-ons */
+
+#rcp-add-ons h2 {
+	margin: 0 0 15px;
+}
+
+#rcp-add-ons .rcp-add-on {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0 11px 14px 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	width: 320px;
+	padding: 14px;
+	min-height: 290px;
+	position: relative;
+}
+
+#rcp-add-ons .rcp-add-on h3 {
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+#rcp-add-ons .rcp-add-on .button-secondary {
+	position: absolute;
+	bottom: 14px;
+	left: 14px;
+}
+
+#rcp-add-ons .rcp-add-on .wp-post-image {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.rcp-add-ons-footer {
+	padding-top: 10px;
+}
+
 /* Optimized for 1280px wide (macbooks) and under */
 @media (max-width: 1280px) {
 	/* members page columns */
