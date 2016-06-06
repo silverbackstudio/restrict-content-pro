@@ -113,7 +113,7 @@ function rcp_payments_page() {
 								<td><?php echo esc_html( $payment->date ); ?></td>
 								<td><?php echo rcp_currency_filter( $payment->amount ); ?></td>
 								<td><?php echo esc_html( $payment->payment_type ); ?></td>
-								<td><?php echo $payment->transaction_id; ?></td>
+								<td><?php echo rcp_get_merchant_transaction_id_link( $payment ); ?></td>
 								<td><?php echo rcp_get_payment_status_label( $payment ); ?></td>
 								<?php do_action( 'rcp_payments_page_table_column', $payment->id ); ?>
 								<?php if( current_user_can( 'rcp_manage_payments' ) ) : ?>
