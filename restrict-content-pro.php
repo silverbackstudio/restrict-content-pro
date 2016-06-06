@@ -3,7 +3,7 @@
 Plugin Name: Restrict Content Pro
 Plugin URL: https://restrictcontentpro.com
 Description: Set up a complete subscription system for your WordPress site and deliver premium content to your subscribers. Unlimited subscription packages, membership management, discount codes, registration / login forms, and more.
-Version: 2.5.4
+Version: 2.6
 Author: Restrict Content Pro Team
 Author URI: https://restrictcontentpro.com
 Contributors: mordauk
@@ -21,7 +21,7 @@ if ( !defined( 'RCP_PLUGIN_FILE' ) ) {
 	define( 'RCP_PLUGIN_FILE', __FILE__ );
 }
 if ( !defined( 'RCP_PLUGIN_VERSION' ) ) {
-	define( 'RCP_PLUGIN_VERSION', '2.5.4' );
+	define( 'RCP_PLUGIN_VERSION', '2.6' );
 }
 
 
@@ -29,8 +29,9 @@ if ( !defined( 'RCP_PLUGIN_VERSION' ) ) {
 * setup DB names
 *******************************************/
 
-if ( ! function_exists( 'is_plugin_active_for_network' ) )
+if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 	require_once ABSPATH . '/wp-admin/includes/plugin.php';
+}
 
 function rcp_get_levels_db_name() {
 	global $wpdb;
@@ -38,6 +39,14 @@ function rcp_get_levels_db_name() {
 	$prefix = is_plugin_active_for_network( 'restrict-content-pro/restrict-content-pro.php' ) ? '' : $wpdb->prefix;
 
 	return apply_filters( 'rcp_levels_db_name', $prefix . 'restrict_content_pro' );
+}
+
+function rcp_get_level_meta_db_name() {
+	global $wpdb;
+
+	$prefix = is_plugin_active_for_network( 'restrict-content-pro/restrict-content-pro.php' ) ? '' : $wpdb->prefix;
+
+	return apply_filters( 'rcp_level_meta_db_name', $prefix . 'rcp_subscription_meta' );
 }
 
 function rcp_get_discounts_db_name() {
@@ -56,11 +65,19 @@ function rcp_get_payments_db_name() {
 	return apply_filters( 'rcp_payments_db_name', $prefix . 'rcp_payments' );
 }
 
+function rcp_get_payment_meta_db_name() {
+	global $wpdb;
+
+	$prefix = is_plugin_active_for_network( 'restrict-content-pro/restrict-content-pro.php' ) ? '' : $wpdb->prefix;
+
+	return apply_filters( 'rcp_payments_db_name', $prefix . 'rcp_payment_meta' );
+}
+
 
 /*******************************************
 * global variables
 *******************************************/
-global $wpdb;
+global $wpdb, $rcp_payments_db, $rcp_levels_db, $rcp_discounts_db;
 
 // the plugin base directory
 global $rcp_base_dir; // not used any more, but just in case someone else is
@@ -243,3 +260,24 @@ if( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 	}
 
 }
+
+/**
+ * Register / set up our databases classes
+ *
+ * @return  void
+ *
+ * @access  private
+ * @since   2.6
+ */
+function rcp_register_databases() {
+
+	global $wpdb, $rcp_payments_db, $rcp_levels_db, $rcp_discounts_db;
+
+	$rcp_payments_db   = new RCP_Payments;
+	$rcp_levels_db     = new RCP_Levels;
+	$rcp_discounts_db  = new RCP_Discounts;
+	$wpdb->levelmeta   = $rcp_levels_db->meta_db_name;
+	$wpdb->paymentmeta = $rcp_payments_db->meta_db_name;
+
+}
+add_action( 'plugins_loaded', 'rcp_register_databases', 11 );
