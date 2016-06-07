@@ -179,8 +179,17 @@ img.help-image {
 .rcp-sub-order-col {
 	width: 50px;
 }
+.rcp_delete_subscription {
+	color:red;
+}
+.rcp_delete_subscription:hover {
+	color:red;
+}
+.rcp_delete_subscription:focus {
+	color:red;
+}
 
-/* discountcodes page columns */
+/* discount codes page columns */
 .rcp-discounts-name-col {
 	width: 190px;
 }
