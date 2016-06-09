@@ -783,3 +783,18 @@ function rcp_add_prorate_message() {
 }
 add_action( 'rcp_before_subscription_form_fields', 'rcp_add_prorate_message' );
 
+/**
+ * Removes the _rcp_expiring_soon_email_sent user meta flag when the member's status is set to active.
+ *
+ * @since 2.5.5
+ * @return void
+ */
+function rcp_remove_expiring_soon_email_sent_flag( $status, $user_id ) {
+
+	if( 'active' !== $status ) {
+		return;
+	}
+
+	delete_user_meta( $user_id, '_rcp_expiring_soon_email_sent' );
+}
+add_action( 'rcp_set_status', 'rcp_remove_expiring_soon_email_sent_flag', 10, 2 );
