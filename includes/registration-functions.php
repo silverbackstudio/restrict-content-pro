@@ -486,7 +486,7 @@ add_action( 'rcp_set_status', 'rcp_remove_new_subscription_flag', 999999999999, 
  * When upgrading subscriptions, the new level / key are stored as pending. Once payment is received, the pending
  * values are set as the permanent values.
  *
- * See https://github.com/pippinsplugins/restrict-content-pro/issues/294
+ * See https://github.com/restrictcontentpro/restrict-content-pro/issues/294
  *
  * @access      public
  * @since       2.4.3
