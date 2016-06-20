@@ -117,7 +117,9 @@ function rcp_save_meta_data( $post_id ) {
 		}
 
 	} elseif ( ! current_user_can( 'edit_post', $post_id ) ) {
+
 		return;
+
 	}
 
 	$restrict_by = sanitize_text_field( $_POST['rcp_restrict_by'] );
@@ -125,6 +127,7 @@ function rcp_save_meta_data( $post_id ) {
 	switch( $restrict_by ) {
 
 		case 'unrestricted' :
+
 			delete_post_meta( $post_id, 'rcp_access_level' );
 			delete_post_meta( $post_id, 'rcp_subscription_level' );
 
@@ -140,6 +143,7 @@ function rcp_save_meta_data( $post_id ) {
 				case 'any' :
 
 					update_post_meta( $post_id, 'rcp_subscription_level', 'any' );
+
 					break;
 
 
@@ -193,6 +197,8 @@ function rcp_save_meta_data( $post_id ) {
 	update_post_meta( $post_id, 'rcp_show_excerpt', $show_excerpt );
 	update_post_meta( $post_id, 'rcp_hide_from_feed', $hide_in_feed );
 	update_post_meta( $post_id, 'rcp_user_level', $user_role );
+
+	delete_post_meta( $post_id, '_is_paid' );
 
 }
 add_action( 'save_post', 'rcp_save_meta_data' );
