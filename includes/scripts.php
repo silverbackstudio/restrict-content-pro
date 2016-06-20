@@ -6,9 +6,14 @@ function rcp_admin_scripts( $hook ) {
 	global $rcp_options, $rcp_members_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_export_page, $rcp_help_page, $rcp_tools_page, $rcp_logs_page;
 	$pages = array( $rcp_members_page, $rcp_subscriptions_page, $rcp_discounts_page, $rcp_payments_page, $rcp_reports_page, $rcp_settings_page, $rcp_logs_page, $rcp_export_page, $rcp_tools_page, $rcp_help_page );
 
+	$pages[] = 'post.php';
+	$pages[] = 'post-new.php';
+	$pages[] = 'edit.php';
+
 	if( in_array( $hook, $pages ) ) {
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'jquery-ui-tooltip' );
 		wp_enqueue_script( 'bbq',  RCP_PLUGIN_URL . 'includes/js/jquery.ba-bbq.min.js' );
 		wp_enqueue_script( 'rcp-admin-scripts',  RCP_PLUGIN_URL . 'includes/js/admin-scripts.js', array( 'jquery' ), RCP_PLUGIN_VERSION );
 	}
@@ -17,10 +22,6 @@ function rcp_admin_scripts( $hook ) {
 		wp_enqueue_script( 'jquery-flot', RCP_PLUGIN_URL . 'includes/js/jquery.flot.min.js' );
 	}
 
-	if( $hook == $rcp_help_page ) {
-		wp_enqueue_style( 'jquery-snippet',  RCP_PLUGIN_URL . 'includes/css/jquery.snippet.min.css' );
-		wp_enqueue_script( 'jquery-snippet',  RCP_PLUGIN_URL . 'includes/js/jquery.snippet.min.js' );
-	}
 	if( in_array( $hook, $pages ) ) {
 		wp_localize_script( 'rcp-admin-scripts', 'rcp_vars', array(
 				'rcp_member_nonce'    => wp_create_nonce( 'rcp_member_nonce' ),

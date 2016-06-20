@@ -127,6 +127,19 @@ img.help-image {
 	overflow: hidden;
 	border: 1px solid #ccc;
 }
+
+/* restrict this content metabox */
+#rcp-metabox-field-role, 
+#rcp-metabox-field-levels, 
+#rcp-metabox-field-access-levels {
+	border-left: 3px solid #eee;
+	padding-left: 10px;
+}
+.rcp-subscription-levels {
+    padding-left: 1.75rem;
+    margin-top: .5rem;
+ }
+ 
 /* members page columns */
 
 .rcp-user-col {
@@ -372,6 +385,24 @@ table.rcp-table th {
 	}
 }
 
+/* Optimized for Tablets */
+@media (max-width: 800px) {
+
+}
+
+/* Tooltips */
+.rcp-help-tip {
+	cursor: help;
+}
+.ui-tooltip {
+	background: #333 !important;
+	border-radius: 3px !important;
+	box-shadow: 1px 1px 2px 1px rgba(214,214,214,0.5);
+	color: #dedede !important;
+	max-width: 400px;
+	padding: 7px;
+	text-rendering: optimizeLegibility;
+}
 @media (min-width: 783px) {
 	.rcp-payment-amount-user-col {
 		display: none;
