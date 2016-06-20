@@ -94,7 +94,7 @@ function rcp_settings_page() {
 									endif;
 									?>
 								</select>
-								<p class="description"><?php _e( 'Choose the page that has the [register_form] short code.', 'rcp' ); ?></p>
+								<p class="description"><?php printf( __( 'Choose the primary registration page. This must contain the [register_form] short code. Additional registration forms may be added to other pages with [register_form id="x"]. <a href="%s" target="_blank">See documentation</a>.', 'rcp' ), 'http://docs.pippinsplugins.com/article/442-registerform' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -141,7 +141,7 @@ function rcp_settings_page() {
 									endif;
 									?>
 								</select>
-								<p class="description"><?php _e( 'This page displays the account and membership information for members. Contains [subscription_details] shortcode.', 'rcp' ); ?></p>
+								<p class="description"><?php printf( __( 'This page displays the account and membership information for members. Contains <a href="%s" target="_blank">[subscription_details] short code</a>.', 'rcp' ), 'http://docs.pippinsplugins.com/article/447-subscriptiondetails' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -165,7 +165,7 @@ function rcp_settings_page() {
 									endif;
 									?>
 								</select>
-								<p class="description"><?php _e( 'This page displays a profile edit form for logged-in members. Contains [rcp_profile_editor] shortcode.', 'rcp' ); ?></p>
+								<p class="description"><?php printf( __( 'This page displays a profile edit form for logged-in members. Contains <a href="%s" target="_blank">[rcp_profile_editor] shortcode.', 'rcp' ), 'http://docs.pippinsplugins.com/article/446-rcpprofileeditor' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -189,7 +189,7 @@ function rcp_settings_page() {
 									endif;
 									?>
 								</select>
-								<p class="description"><?php _e( 'This page displays a profile edit form for logged-in members. Contains [rcp_update_card] shortcode.', 'rcp' ); ?></p>
+								<p class="description"><?php printf( __( 'This page displays a profile edit form for logged-in members. Contains <a href="%s" target="_blank">[rcp_update_card] short code</a>.', 'rcp' ), 'http://docs.pippinsplugins.com/article/820-rcpupdatecard' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
@@ -700,7 +700,7 @@ function rcp_settings_page() {
 
 										?>
 									</select>
-									<p class="description"><?php _e( 'When should the renewal reminder be sent?', 'rcp' ); ?></p>
+									<p class="description"><?php _e( 'When should the renewal reminder be sent? These are sent to members that do not have automatically recurring subscriptions.', 'rcp' ); ?></p>
 								</td>
 							</tr>
 							<tr valign="top">
@@ -851,7 +851,7 @@ function rcp_settings_page() {
 							</th>
 							<td>
 								<input class="regular-text" id="rcp_settings[invoice_company]" style="width: 300px;" name="rcp_settings[invoice_company]" value="<?php if( isset( $rcp_options['invoice_company'] ) ) { echo $rcp_options['invoice_company']; } ?>"/>
-								<p class="description"><?php _e( 'Enter the company name that will be shown on the invoice. This is only displayed if no logo image is uploaded above.', 'rcp' ); ?></p>
+								<p class="description"><?php _e( 'Enter the company name that will be shown on the invoice.', 'rcp' ); ?></p>
 							</td>
 						</tr>
 						<tr valign="top">
