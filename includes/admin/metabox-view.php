@@ -8,7 +8,7 @@ $show_excerpt      = get_post_meta( get_the_ID(), 'rcp_show_excerpt', true );
 $hide_in_feed      = get_post_meta( get_the_ID(), 'rcp_hide_from_feed', true );
 $user_role         = get_post_meta( get_the_ID(), 'rcp_user_level', true );
 $access_display    = is_numeric( $access_level ) ? '' : ' style="display:none;"';
-$level_set_display = ! empty( $sub_levels ) ? '' : ' style="display:none;"';
+$level_set_display = ! empty( $sub_levels ) || ! empty( $is_paid ) ? '' : ' style="display:none;"';
 $levels_display    = is_array( $sub_levels ) ? '' : ' style="display:none;"';
 $role_set_display  = '' != $user_role ? '' : ' style="display:none;"';
 ?>
