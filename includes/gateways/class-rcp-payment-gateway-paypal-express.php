@@ -104,6 +104,9 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 		}
 
 		$request = wp_remote_post( $this->api_endpoint, array( 'timeout' => 45, 'sslverify' => false, 'httpversion' => '1.1', 'body' => $args ) );
+		$body    = wp_remote_retrieve_body( $request );
+		$code    = wp_remote_retrieve_response_code( $request );
+		$message = wp_remote_retrieve_response_message( $request );
 
 		if( is_wp_error( $request ) ) {
 
@@ -114,22 +117,24 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 
 			wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
-		} elseif ( 200 == $request['response']['code'] && 'OK' == $request['response']['message'] ) {
+		} elseif ( 200 == $code && 'OK' == $message ) {
 
-			parse_str( $request['body'], $data );
+			if( is_string( $body ) ) {
+				wp_parse_str( $body, $body );
+			}
 
-			if( 'failure' === strtolower( $data['ACK'] ) ) {
+			if( 'failure' === strtolower( $body['ACK'] ) ) {
 
 				$error = '<p>' . __( 'PayPal token creation failed.', 'rcp' ) . '</p>';
-				$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $data['L_LONGMESSAGE0'] . '</p>';
-				$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $data['L_ERRORCODE0'] . '</p>';
+				$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $body['L_LONGMESSAGE0'] . '</p>';
+				$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $body['L_ERRORCODE0'] . '</p>';
 
 				wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
 			} else {
 
 				// Successful token
-				wp_redirect( $this->checkout_url . $data['TOKEN'] );
+				wp_redirect( $this->checkout_url . $body['TOKEN'] );
 				exit;
 
 			}
@@ -194,6 +199,9 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 				}
 
 				$request = wp_remote_post( $this->api_endpoint, array( 'timeout' => 45, 'sslverify' => false, 'httpversion' => '1.1', 'body' => $args ) );
+				$body    = wp_remote_retrieve_body( $request );
+				$code    = wp_remote_retrieve_response_code( $request );
+				$message = wp_remote_retrieve_response_message( $request );
 
 				if( is_wp_error( $request ) ) {
 
@@ -202,15 +210,17 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 
 					wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
-				} elseif ( 200 == $request['response']['code'] && 'OK' == $request['response']['message'] ) {
+				} elseif ( 200 == $code && 'OK' == $message ) {
 
-					parse_str( $request['body'], $data );
+					if( is_string( $body ) ) {
+						wp_parse_str( $body, $body );
+					}
 
-					if( 'failure' === strtolower( $data['ACK'] ) ) {
+					if( 'failure' === strtolower( $body['ACK'] ) ) {
 
 						$error = '<p>' . __( 'PayPal payment processing failed.', 'rcp' ) . '</p>';
-						$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $data['L_LONGMESSAGE0'] . '</p>';
-						$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $data['L_ERRORCODE0'] . '</p>';
+						$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $body['L_LONGMESSAGE0'] . '</p>';
+						$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $body['L_ERRORCODE0'] . '</p>';
 
 						wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
@@ -222,10 +232,10 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 							$cancelled = rcp_cancel_member_payment_profile( $member->ID, false);
 						}
 
-						$member->set_payment_profile_id( $data['PROFILEID'] );
+						$member->set_payment_profile_id( $body['PROFILEID'] );
 
 						$member->renew( true );
-						$member->set_payment_profile_id( $data['PROFILEID'] );
+						$member->set_payment_profile_id( $body['PROFILEID'] );
 
 						wp_redirect( esc_url_raw( rcp_get_return_url() ) ); exit;
 
@@ -259,6 +269,9 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 				);
 
 				$request = wp_remote_post( $this->api_endpoint, array( 'timeout' => 45, 'sslverify' => false, 'httpversion' => '1.1', 'body' => $args ) );
+				$body    = wp_remote_retrieve_body( $request );
+				$code    = wp_remote_retrieve_response_code( $request );
+				$message = wp_remote_retrieve_response_message( $request );
 
 				if( is_wp_error( $request ) ) {
 
@@ -267,15 +280,17 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 
 					wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
-				} elseif ( 200 == $request['response']['code'] && 'OK' == $request['response']['message'] ) {
+				} elseif ( 200 == $code && 'OK' == $message ) {
 
-					parse_str( $request['body'], $data );
+					if( is_string( $body ) ) {
+						wp_parse_str( $body, $body );
+					}
 
-					if( 'failure' === strtolower( $data['ACK'] ) ) {
+					if( 'failure' === strtolower( $body['ACK'] ) ) {
 
 						$error = '<p>' . __( 'PayPal payment processing failed.', 'rcp' ) . '</p>';
-						$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $data['L_LONGMESSAGE0'] . '</p>';
-						$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $data['L_ERRORCODE0'] . '</p>';
+						$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $body['L_LONGMESSAGE0'] . '</p>';
+						$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $body['L_ERRORCODE0'] . '</p>';
 
 						wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
@@ -303,9 +318,9 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 							'subscription'     => $member->get_subscription_name(),
 							'payment_type'     => 'PayPal Express One Time',
 							'subscription_key' => $member->get_subscription_key(),
-							'amount'           => $data['PAYMENTINFO_0_AMT'],
+							'amount'           => $body['PAYMENTINFO_0_AMT'],
 							'user_id'          => $member->ID,
-							'transaction_id'   => $data['PAYMENTINFO_0_TRANSACTIONID']
+							'transaction_id'   => $body['PAYMENTINFO_0_TRANSACTIONID']
 						);
 
 						$rcp_payments = new RCP_Payments;
@@ -527,14 +542,19 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 		);
 
 		$request = wp_remote_get( add_query_arg( $args, $this->api_endpoint ), array( 'timeout' => 45, 'sslverify' => false, 'httpversion' => '1.1' ) );
+		$body    = wp_remote_retrieve_body( $request );
+		$code    = wp_remote_retrieve_response_code( $request );
+		$message = wp_remote_retrieve_response_message( $request );
 
 		if( is_wp_error( $request ) ) {
 
 			return $request;
 
-		} elseif ( 200 == $request['response']['code'] && 'OK' == $request['response']['message'] ) {
+		} elseif ( 200 == $code && 'OK' == $message ) {
 
-			parse_str( $request['body'], $data );
+			if( is_string( $body ) ) {
+				wp_parse_str( $body, $body );
+			}
 
 			$member = new RCP_Member( absint( $_GET['user_id'] ) );
 
@@ -544,9 +564,9 @@ class RCP_Payment_Gateway_PayPal_Express extends RCP_Payment_Gateway {
 				$subscription_id = $member->get_subscription_id();
 			}
 
-			$data['subscription'] = (array) rcp_get_subscription_details( $subscription_id );
+			$body['subscription'] = (array) rcp_get_subscription_details( $subscription_id );
 
-			return $data;
+			return $body;
 
 		}
 

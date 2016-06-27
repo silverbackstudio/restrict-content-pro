@@ -1042,20 +1042,19 @@ function rcp_cancel_member_payment_profile( $member_id = 0, $set_status = true )
 
 			} else {
 
-				$body = wp_remote_retrieve_body( $request );
+				$body    = wp_remote_retrieve_body( $request );
+				$code    = wp_remote_retrieve_response_code( $request );
+				$message = wp_remote_retrieve_response_message( $request );
+
 				if( is_string( $body ) ) {
 					wp_parse_str( $body, $body );
 				}
 
-				if( empty( $request['response'] ) ) {
+				if( 200 !== (int) $code ) {
 					$success = false;
 				}
 
-				if( empty( $request['response']['code'] ) || 200 !== (int) $request['response']['code'] ) {
-					$success = false;
-				}
-
-				if( empty( $request['response']['message'] ) || 'OK' !== $request['response']['message'] ) {
+				if( 'OK' !== $message ) {
 					$success = false;
 				}
 

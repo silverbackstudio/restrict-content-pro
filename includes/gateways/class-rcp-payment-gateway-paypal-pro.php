@@ -97,6 +97,9 @@ class RCP_Payment_Gateway_PayPal_Pro extends RCP_Payment_Gateway {
 		}
 
 		$request = wp_remote_post( $this->api_endpoint, array( 'timeout' => 45, 'sslverify' => false, 'httpversion' => '1.1', 'body' => $args ) );
+		$body    = wp_remote_retrieve_body( $request );
+		$code    = wp_remote_retrieve_response_code( $request );
+		$message = wp_remote_retrieve_response_message( $request );
 
 		if( is_wp_error( $request ) ) {
 
@@ -107,17 +110,19 @@ class RCP_Payment_Gateway_PayPal_Pro extends RCP_Payment_Gateway {
 
 			wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
-		} elseif ( 200 == $request['response']['code'] && 'OK' == $request['response']['message'] ) {
+		} elseif ( 200 == $code && 'OK' == $message ) {
 
-			parse_str( $request['body'], $data );
+			if( is_string( $body ) ) {
+				wp_parse_str( $body, $body );
+			}
 
-			if( false !== strpos( strtolower( $data['ACK'] ), 'failure' ) ) {
+			if( false !== strpos( strtolower( $body['ACK'] ), 'failure' ) ) {
 
 				do_action( 'rcp_paypal_pro_signup_payment_failed', $request, $this );
 
 				$error = '<p>' . __( 'PayPal subscription creation failed.', 'rcp' ) . '</p>';
-				$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $data['L_LONGMESSAGE0'] . '</p>';
-				$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $data['L_ERRORCODE0'] . '</p>';
+				$error .= '<p>' . __( 'Error message:', 'rcp' ) . ' ' . $body['L_LONGMESSAGE0'] . '</p>';
+				$error .= '<p>' . __( 'Error code:', 'rcp' ) . ' ' . $body['L_ERRORCODE0'] . '</p>';
 
 				wp_die( $error, __( 'Error', 'rcp' ), array( 'response' => '401' ) );
 
@@ -132,9 +137,9 @@ class RCP_Payment_Gateway_PayPal_Pro extends RCP_Payment_Gateway {
 
 				}
 
-				$member->set_payment_profile_id( $data['PROFILEID'] );
+				$member->set_payment_profile_id( $body['PROFILEID'] );
 
-				if ( 'ActiveProfile' === $data['PROFILESTATUS'] ) {
+				if ( 'ActiveProfile' === $body['PROFILESTATUS'] ) {
 					// Confirm a one-time payment
 					$member->renew( $this->auto_renew );
 				}
