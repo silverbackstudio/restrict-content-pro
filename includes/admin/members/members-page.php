@@ -22,7 +22,7 @@ function rcp_members_page() {
 			}
 
 			// Get subscriber count
-			if( ! empty( $search ) ) {
+			if( ! empty( $search ) || ! empty( $subscription_id ) ) {
 
 				// Query counts
 				$active_count    = rcp_count_members( $subscription_id, 'active', null, $search );
