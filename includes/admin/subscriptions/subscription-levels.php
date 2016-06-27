@@ -135,7 +135,10 @@ function rcp_member_levels_page()
 										}
 										?>
 									</select>
-									<p class="description"><?php _e('Level of access this subscription gives. Leave None for default or you are unsure what this is.', 'rcp'); ?></p>
+									<p class="description">
+										<?php _e('Level of access this subscription gives. Leave None for default or you are unsure what this is.', 'rcp'); ?>
+										<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Access Level</strong>: refers to a tiered system where a member\'s ability to view content is determined by the access level assigned to their account. A member with an access level of 5 can view content assigned to access levels of 5 and lower, whereas a member with an access level of 4 can only view content assigned to levels of 4 and lower.', 'rcp' ); ?>"></span>
+									</p>
 								</td>
 							</tr>
 							<tr class="form-field">
@@ -149,7 +152,10 @@ function rcp_member_levels_page()
 										<option value="month"><?php _e('Month(s)', 'rcp'); ?></option>
 										<option value="year"><?php _e('Year(s)', 'rcp'); ?></option>
 									</select>
-									<p class="description"><?php _e('Length of time for this membership level. Enter 0 for unlimited.', 'rcp'); ?></p>
+									<p class="description">
+										<?php _e('Length of time for this membership level. Enter 0 for unlimited.', 'rcp'); ?>
+										<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( '<strong>Example</strong>: setting this to 1 month would make memberships last 1 month, after which they will renew automatically or be marked as expired.', 'rcp' ); ?>"></span>
+									</p>
 								</td>
 							</tr>
 							<tr class="form-field">
@@ -162,7 +168,10 @@ function rcp_member_levels_page()
 										<option value="normal"><?php echo isset( $rcp_options['currency'] ) ? $rcp_options['currency'] : 'USD'; ?></option>
 										<option value="free"><?php _e('Free', 'rcp'); ?></option>
 									</select>
-									<p class="description"><?php _e('The price of this membership level. Enter 0 for free.', 'rcp'); ?></p>
+									<p class="description">
+										<?php _e('The price of this membership level. Enter 0 for free.', 'rcp'); ?>
+										<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'This price refers to the amount paid per duration period. For example, if duration period is set to 1 month, this would be the amount charged each month.', 'rcp' ); ?>"></span>
+									</p>
 								</td>
 							</tr>
 							<tr class="form-field">

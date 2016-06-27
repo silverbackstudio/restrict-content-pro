@@ -231,7 +231,10 @@ function rcp_members_page() {
 				</div><!--end .tablenav-->
 			<?php endif; ?>
 			<?php do_action('rcp_members_below_table'); ?>
-			<h3><?php _e('Add New Subscription (for existing user)', 'rcp'); ?></h3>
+			<h3>
+				<?php _e('Add New Subscription (for existing user)', 'rcp'); ?>
+				<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'If you wish to create a brand new account, that may be done from Users &rarr; Add New. <br/><strong>Note</strong>: this will not create a payment profile for the member. That must be done manually through your merchant account.', 'rcp' ); ?>"></span>
+			</h3>
 			<form id="rcp-add-new-member" action="" method="post">
 				<table class="form-table">
 					<tbody>
@@ -259,7 +262,8 @@ function rcp_members_page() {
 										endforeach;
 									?>
 								</select>
-								<p class="description"><?php _e('Choose the subscription level for this user', 'rcp'); ?></p>
+								<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'The subscription level determines the content the member has access to. <strong>Note</strong>: adding a subscription level to a member will not create a payment profile in your merchant account.', 'rcp' ); ?>"></span>
+								<p class="description"><?php _e('Choose the subscription level for this user.', 'rcp'); ?></p>
 							</td>
 						</tr>
 						<tr class="form-field">

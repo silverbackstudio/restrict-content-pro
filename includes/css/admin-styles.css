@@ -129,8 +129,8 @@ img.help-image {
 }
 
 /* restrict this content metabox */
-#rcp-metabox-field-role, 
-#rcp-metabox-field-levels, 
+#rcp-metabox-field-role,
+#rcp-metabox-field-levels,
 #rcp-metabox-field-access-levels {
 	border-left: 3px solid #eee;
 	padding-left: 10px;
@@ -139,7 +139,7 @@ img.help-image {
     padding-left: 1.75rem;
     margin-top: .5rem;
  }
- 
+
 /* members page columns */
 
 .rcp-user-col {
@@ -241,13 +241,25 @@ img.help-image {
 .rcp-view-invoice {
 	display: inline-block;
 }
+
 /* error logs */
+
 
 #rcp-error-logs .column-log_error {
 	width: 15%;
 }
 #rcp-error-logs .column-message {
 	width: 65%;
+}
+
+/* restrict this content metabox */
+#rcp-metabox-field-levels, #rcp-metabox-field-access-levels {
+	border-left: 3px solid #eee;
+	padding-left: 10px;
+}
+.rcp-subscription-levels {
+    padding-left: 1.75rem;
+    margin-top: .5rem;
 }
 /* reports */
 
@@ -385,6 +397,12 @@ table.rcp-table th {
 	}
 }
 
+@media (min-width: 783px) {
+	.rcp-payment-amount-user-col {
+		display: none;
+	}
+}
+
 /* Optimized for Tablets */
 @media (max-width: 800px) {
 
@@ -402,9 +420,4 @@ table.rcp-table th {
 	max-width: 400px;
 	padding: 7px;
 	text-rendering: optimizeLegibility;
-}
-@media (min-width: 783px) {
-	.rcp-payment-amount-user-col {
-		display: none;
-	}
 }

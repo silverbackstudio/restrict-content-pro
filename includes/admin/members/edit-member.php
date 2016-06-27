@@ -33,6 +33,7 @@ $member = new RCP_Member( $member_id );
 							endforeach;
 						?>
 					</select>
+					<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'An Active status is required to access paid content. Members with a status of Cancelled may continue to access paid content until the expiration date on their account is reached.', 'rcp' ); ?>"></span>
 					<p class="description"><?php _e( 'The status of this user\'s subscription', 'rcp' ); ?></p>
 				</td>
 			</tr>
@@ -57,6 +58,7 @@ $member = new RCP_Member( $member_id );
 				</th>
 				<td>
 					<input id="rcp-key" type="text" style="width: 200px;" value="<?php echo esc_attr( $member->get_subscription_key() ); ?>" disabled="disabled"/>
+					<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'This key is used for reference purposes and may be shown on payment and subscription records in your merchant accounts.', 'rcp' ); ?>"></span>
 					<p class="description"><?php _e( 'The member\'s subscription key. This cannot be changed.', 'rcp' ); ?></p>
 				</td>
 			</tr>
@@ -70,6 +72,7 @@ $member = new RCP_Member( $member_id );
 						<input name="unlimited" id="rcp-unlimited" type="checkbox"<?php checked( get_user_meta( $member->ID, 'rcp_expiration', true ), 'none' ); ?>/>
 						<span class="description"><?php _e( 'Never expires?', 'rcp' ); ?></span>
 					</label>
+					<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'This is the date the member will lose access to content if their membership is not renewed.', 'rcp' ); ?>"></span>
 					<p class="description"><?php _e( 'Enter the expiration date for this user in the format of yyyy-mm-dd', 'rcp' ); ?></p>
 				</td>
 			</tr>
@@ -91,6 +94,7 @@ $member = new RCP_Member( $member_id );
 						<input name="recurring" id="rcp-recurring" type="checkbox" value="1" <?php checked( 1, rcp_is_recurring( $member->ID ) ); ?>/>
 						<?php _e( 'Is this user\'s subscription recurring?', 'rcp' ); ?>
 					</label>
+					<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'If checked, this member has a recurring subscription. Only customers with recurring memberships will be given the option to cancel their membership on their subscription details page.', 'rcp' ); ?>"></span>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -102,6 +106,7 @@ $member = new RCP_Member( $member_id );
 						<input name="trialing" id="rcp-trialing" type="checkbox" value="1" <?php checked( 1, rcp_is_trialing( $member->ID ) ); ?>/>
 						<?php _e( 'Does this user have a trial membership?', 'rcp' ); ?>
 					</label>
+					<span alt="f223" class="rcp-help-tip dashicons dashicons-editor-help" title="<?php _e( 'Members are limited to a single trial membership. Once a trial has been used, the member may not sign up for another trial membership.', 'rcp' ); ?>"></span>
 				</td>
 			</tr>
 			<tr valign="top">
