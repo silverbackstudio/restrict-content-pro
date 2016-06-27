@@ -14,49 +14,7 @@ function rcp_get_metabox_fields() {
 		'title'    => __( 'Restrict this content', 'rcp' ),
 		'context'  => 'normal',
 		'priority' => apply_filters( 'rcp_metabox_priority', 'high' ),
-		'fields'   => array(
-			array(
-				'name' => __( 'Paid Only?', 'rcp' ),
-				'id'   => '_is_paid',
-				'type' => 'checkbox',
-				'desc' => __( 'Restrict this entry to active paid users only.', 'rcp' )
-			),
-			array(
-				'name' => __( 'Show Excerpt?', 'rcp' ),
-				'id'   => $rcp_prefix . 'show_excerpt',
-				'type' => 'checkbox',
-				'desc' => __( 'Allow non active users to view the excerpt? If left unchecked, the message defined in settings will be used.', 'rcp' )
-			),
-			array(
-				'name' => __( 'Hide from Feed?', 'rcp' ),
-				'id'   => $rcp_prefix . 'hide_from_feed',
-				'type' => 'checkbox',
-				'desc' => __( 'Hide the excerpt of this post / page from the Feed?', 'rcp' )
-			),
-			array(
-				'name' => __( 'Access Level', 'rcp' ),
-				'id'   => $rcp_prefix . 'access_level',
-				'type' => 'select',
-				'desc' => __( 'Choose the access level required see this content. The access level is determined by the subscription the member is subscribed to.', 'rcp' ),
-				'options' => rcp_get_access_levels(),
-				'std'  => 'All'
-			),
-			array(
-				'name' => __( 'Subscription Level', 'rcp' ),
-				'id'   => $rcp_prefix . 'subscription_level',
-				'type' => 'levels',
-				'desc' => __( 'Choose the subscription levels allowed to view this content.', 'rcp' ),
-				'std'  => 'All'
-			),
-			array(
-				'name' => __( 'User Level', 'rcp' ),
-				'id'   => $rcp_prefix . 'user_level',
-				'type' => 'select',
-				'desc' => __( 'Choose the user level that can see this post / page\'s content. Users of this level and higher will be the only ones able to view the content.', 'rcp' ),
-				'options' => array('All', 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber'),
-				'std'  => 'All'
-			)
-		)
+		'fields'   => array() // No longer used
 	);
 
 	return apply_filters( 'rcp_metabox_fields', $rcp_meta_box );
