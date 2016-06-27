@@ -20,10 +20,10 @@ $role_set_display  = '' != $user_role ? '' : ' style="display:none;"';
 	</p>
 	<p>
 		<select id="rcp-restrict-by" name="rcp_restrict_by">
-			<option value="unrestricted" <?php selected( true, empty( $sub_levels ) && empty( $access_level) ); ?>><?php _e( 'Everyone', 'rcp' ); ?></option>
 			<option value="subscription-level"<?php selected( true, ! empty( $sub_levels ) || ! empty( $is_paid ) ); ?>><?php _e( 'Members of subscription level(s)', 'rcp' ); ?></option>
 			<option value="access-level"<?php selected( true, is_numeric( $access_level ) && empty( $is_paid ) ); ?>><?php _e( 'Members with an access level', 'rcp' ); ?></option>
 			<option value="registered-users"<?php selected( true, empty( $sub_levels ) && ! is_numeric( $access_level ) && empty( $is_paid ) ); ?>><?php _e( 'Members with a certain role', 'rcp' ); ?></option>
+			<option value="unrestricted" <?php selected( true, empty( $sub_levels ) && empty( $access_level) ); ?>><?php _e( 'Everyone', 'rcp' ); ?></option>
 		</select>
 	</p>
 </div>
