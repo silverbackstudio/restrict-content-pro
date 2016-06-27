@@ -86,3 +86,120 @@ function rcp_get_paypal_api_credentials() {
 
 	return apply_filters( 'rcp_get_paypal_api_credentials', $creds );
 }
+
+/**
+ * Process an update card form request
+ *
+ * @access      private
+ * @since       2.6
+ */
+function rcp_paypal_update_billing_card( $member_id = 0, $member_obj ) {
+
+	global $rcp_options;
+
+	if( empty( $member_id ) ) {
+		return;
+	}
+
+	if( ! is_a( $member_obj, 'RCP_Member' ) ) {
+		return;
+	}
+
+
+	if( ! rcp_is_paypal_subscriber( $member_id ) ) {
+		return;
+	}
+
+	if( isset( $rcp_options['sandbox'] ) ) {
+
+		$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
+
+	} else {
+
+		$api_endpoint = 'https://api-3t.paypal.com/nvp';
+
+	}
+
+	$error       = '';
+	$customer_id = $member_obj->get_payment_profile_id();
+	$credentials = rcp_get_paypal_api_credentials();
+
+	$card_number    = isset( $_POST['rcp_card_number'] )    && is_numeric( $_POST['rcp_card_number'] )    ? $_POST['rcp_card_number']    : '';
+	$card_exp_month = isset( $_POST['rcp_card_exp_month'] ) && is_numeric( $_POST['rcp_card_exp_month'] ) ? $_POST['rcp_card_exp_month'] : '';
+	$card_exp_year  = isset( $_POST['rcp_card_exp_year'] )  && is_numeric( $_POST['rcp_card_exp_year'] )  ? $_POST['rcp_card_exp_year']  : '';
+	$card_cvc       = isset( $_POST['rcp_card_cvc'] )       && is_numeric( $_POST['rcp_card_cvc'] )       ? $_POST['rcp_card_cvc']       : '';
+	$card_zip       = isset( $_POST['rcp_card_zip'] ) ? sanitize_text_field( $_POST['rcp_card_zip'] ) : '' ;
+
+	if ( empty( $card_number ) || empty( $card_exp_month ) || empty( $card_exp_year ) || empty( $card_cvc ) || empty( $card_zip ) ) {
+		$error = __( 'Please enter all required fields.', 'rcp' );
+	}
+
+	if ( empty( $error ) ) {
+
+		$args = array(
+			'USER'                => $credentials['username'],
+			'PWD'                 => $credentials['password'],
+			'SIGNATURE'           => $credentials['signature'],
+			'VERSION'             => '124',
+			'METHOD'              => 'UpdateRecurringPaymentsProfile',
+			'PROFILEID'           => $customer_id,
+			'ACCT'                => $card_number,
+			'EXPDATE'             => $card_exp_month . $card_exp_year,
+			// needs to be in the format 062019
+			'CVV2'                => $card_cvc,
+			'ZIP'                 => $card_zip,
+			'BUTTONSOURCE'        => 'EasyDigitalDownloads_SP',
+		);
+
+		$request = wp_remote_post( $api_endpoint, array(
+			'timeout'     => 45,
+			'sslverify'   => false,
+			'body'        => $args,
+			'httpversion' => '1.1',
+		) );
+
+		$body    = wp_remote_retrieve_body( $request );
+		$code    = wp_remote_retrieve_response_code( $request );
+		$message = wp_remote_retrieve_response_message( $request );
+
+		if ( is_wp_error( $request ) ) {
+
+			$error = $request->get_error_message();
+
+		} elseif ( 200 == $code && 'OK' == $message ) {
+
+			if( is_string( $body ) ) {
+				$body = wp_parse_str( $body, $body );
+			}
+
+			if ( 'failure' === strtolower( $body['ACK'] ) ) {
+
+				$error = $body['L_ERRORCODE0'] . ': ' . $body['L_LONGMESSAGE0'];
+
+			} else {
+
+				// Request was successful, but verify the profile ID that came back matches
+				if ( $customer_id !== $body['PROFILEID'] ) {
+					$error = __( 'Error updating subscription', 'rcp' );
+				}
+
+			}
+
+		} else {
+
+			$error = __( 'Something has gone wrong, please try again', 'rcp' );
+
+		}
+
+	}
+
+	if( ! empty( $error ) ) {
+
+		wp_redirect( add_query_arg( array( 'card' => 'not-updated', 'msg' => urlencode( $error ) ) ) ); exit;
+
+	}
+
+	wp_redirect( add_query_arg( array( 'card' => 'updated', 'msg' => '' ) ) ); exit;
+
+}
+add_action( 'rcp_update_billing_card', 'rcp_paypal_update_billing_card', 10, 2 );
