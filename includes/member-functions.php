@@ -69,6 +69,35 @@ function rcp_get_members( $status = 'active', $subscription = null, $offset = 0,
 	return false;
 }
 
+/**
+ * Retrieves the total member counts for a status
+ *
+ * This retrieves the count for each subscription level and them sums the results.
+ *
+ * Use rcp_count_members() to retrieve a count based on level, status, recurring, and search terms.
+ *
+ * @access      public
+ * @since       2.6
+ */
+function rcp_get_member_count( $status = 'active' ) {
+
+	global $rcp_levels_db;
+	$levels = $rcp_levels_db->get_levels();
+
+	if( ! $levels ) {
+		return 0;
+	}
+
+	$total = 0;
+	foreach( $levels as $level ) {
+
+		$total += (int) rcp_get_subscription_member_count( $level->id, $status );
+
+	}
+
+	return $total;
+
+}
 
 /*
 * Counts the number of members by subscription level and status
@@ -78,7 +107,6 @@ function rcp_get_members( $status = 'active', $subscription = null, $offset = 0,
 */
 function rcp_count_members( $level = '', $status = 'active', $recurring = null, $search = '' ) {
 	global $wpdb;
-
 
 	if( $status == 'free' ) {
 

@@ -70,9 +70,9 @@ function rcp_member_levels_page()
 							<td class="rcp-sub-subs-col" data-colname="<?php _e( 'Subscribers', 'rcp' ); ?>">
 								<?php
 								if( $price || $level->duration > 0 ) {
-									echo rcp_count_members( $level->id, 'active' );
+									echo rcp_get_subscription_member_count( $level->id, 'active' );
 								} else {
-									echo rcp_count_members( $level->id, 'free' );
+									echo rcp_get_subscription_member_count( $level->id, 'free' );
 								}
 								?>
 							</td>

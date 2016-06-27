@@ -129,8 +129,13 @@ img.help-image {
 }
 
 /* restrict this content metabox */
+<<<<<<< HEAD
 #rcp-metabox-field-role,
 #rcp-metabox-field-levels,
+=======
+#rcp-metabox-field-role, 
+#rcp-metabox-field-levels, 
+>>>>>>> master
 #rcp-metabox-field-access-levels {
 	border-left: 3px solid #eee;
 	padding-left: 10px;
@@ -139,7 +144,11 @@ img.help-image {
     padding-left: 1.75rem;
     margin-top: .5rem;
  }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> master
 /* members page columns */
 
 .rcp-user-col {
@@ -241,16 +250,22 @@ img.help-image {
 .rcp-view-invoice {
 	display: inline-block;
 }
+<<<<<<< HEAD
 
 /* error logs */
 
 
+=======
+/* error logs */
+
+>>>>>>> master
 #rcp-error-logs .column-log_error {
 	width: 15%;
 }
 #rcp-error-logs .column-message {
 	width: 65%;
 }
+<<<<<<< HEAD
 
 /* restrict this content metabox */
 #rcp-metabox-field-levels, #rcp-metabox-field-access-levels {
@@ -261,6 +276,8 @@ img.help-image {
     padding-left: 1.75rem;
     margin-top: .5rem;
 }
+=======
+>>>>>>> master
 /* reports */
 
 #rcp-graphs-date-options,
@@ -395,12 +412,15 @@ table.rcp-table th {
 	.dragHandle {
 		display: none !important;
 	}
+<<<<<<< HEAD
 }
 
 @media (min-width: 783px) {
 	.rcp-payment-amount-user-col {
 		display: none;
 	}
+=======
+>>>>>>> master
 }
 
 /* Optimized for Tablets */
@@ -421,3 +441,11 @@ table.rcp-table th {
 	padding: 7px;
 	text-rendering: optimizeLegibility;
 }
+<<<<<<< HEAD
+=======
+@media (min-width: 783px) {
+	.rcp-payment-amount-user-col {
+		display: none;
+	}
+}
+>>>>>>> master

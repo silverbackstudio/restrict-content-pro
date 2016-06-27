@@ -14,7 +14,6 @@ function rcp_members_page() {
 			$subscription_id = isset( $_GET['subscription'] ) && $_GET['subscription'] != 'all' ? urldecode( $_GET['subscription'] ) : null;
 			$status          = ! empty( $_GET['status'] )  ? urldecode( $_GET['status'] ) : 'active';
 			$order           = ! empty( $_GET['order']  )  ? urldecode( $_GET['order']  ) : 'DESC';
-			$recurring       = isset( $_GET['recurring'] ) ? absint( $_GET['recurring'] ) : null;
 			$search          = ! empty( $_GET['s'] )       ? urldecode( $_GET['s'] )      : '';
 
 			$base_url        = admin_url( 'admin.php?page=rcp-members' );
@@ -22,13 +21,28 @@ function rcp_members_page() {
 				$base_url = add_query_arg( 's', $search, $base_url );
 			}
 
-			// get subscriber count
-			$active_count    = rcp_count_members( $subscription_id, 'active', $recurring, $search );
-			$pending_count   = rcp_count_members( $subscription_id, 'pending', $recurring, $search );
-			$expired_count   = rcp_count_members( $subscription_id, 'expired', $recurring, $search );
-			$cancelled_count = rcp_count_members( $subscription_id, 'cancelled', $recurring, $search );
-			$free_count      = rcp_count_members( $subscription_id, 'free', $recurring, $search );
-			$current_count   = rcp_count_members( $subscription_id, $status, $recurring, $search );
+			// Get subscriber count
+			if( ! empty( $search ) ) {
+
+				// Query counts
+				$active_count    = rcp_count_members( $subscription_id, 'active', null, $search );
+				$pending_count   = rcp_count_members( $subscription_id, 'pending', null, $search );
+				$expired_count   = rcp_count_members( $subscription_id, 'expired', null, $search );
+				$cancelled_count = rcp_count_members( $subscription_id, 'cancelled', null, $search );
+				$free_count      = rcp_count_members( $subscription_id, 'free', null, $search );
+				$current_count   = rcp_count_members( $subscription_id, $status, null, $search );
+
+			} else {
+
+				// Retrieve static counts
+				$active_count    = rcp_get_member_count( 'active' );
+				$pending_count   = rcp_get_member_count( 'pending' );
+				$expired_count   = rcp_get_member_count( 'expired' );
+				$cancelled_count = rcp_get_member_count( 'cancelled' );
+				$free_count      = rcp_get_member_count( 'free' );
+				$current_count   = rcp_get_member_count( $status );
+			}
+
 
 			// pagination variables
 			$page            = isset( $_GET['p'] ) ? absint( $_GET['p'] ) : 1;
@@ -93,11 +107,6 @@ function rcp_members_page() {
 						?>
 					</select>
 				<?php endif; ?>
-				<select name="recurring" id="rcp-recurring">
-					<option value="0"><?php _e('Either', 'rcp'); ?></option>
-					<option value="1"<?php selected( 1, $recurring ); ?>><?php _e('Not Recurring', 'rcp'); ?></option>
-					<option value="2"<?php selected( 2, $recurring ); ?>><?php _e('Recurring', 'rcp'); ?></option>
-				</select>
 				<select name="order" id="rcp-order">
 					<option value="DESC" <?php selected($order, 'DESC'); ?>><?php _e('Newest First', 'rcp'); ?></option>
 					<option value="ASC" <?php selected($order, 'ASC'); ?>><?php _e('Oldest First', 'rcp'); ?></option>
@@ -149,7 +158,7 @@ function rcp_members_page() {
 						);
 						$per_page = 999999;
 					} else {
-						$members = rcp_get_members( $status, $subscription_id, $offset, $per_page, $order, $recurring, $search );
+						$members = rcp_get_members( $status, $subscription_id, $offset, $per_page, $order, null, $search );
 					}
 					if($members) :
 						$i = 1;

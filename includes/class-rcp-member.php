@@ -56,7 +56,7 @@ class RCP_Member extends WP_User {
 				$this->set_recurring( false );
 			}
 
-			do_action( 'rcp_set_status', $new_status, $this->ID, $old_status );
+			do_action( 'rcp_set_status', $new_status, $this->ID, $old_status, $this );
 
 			// Record the status change
 			if( $old_status != $new_status ) {
@@ -641,6 +641,7 @@ class RCP_Member extends WP_User {
 		if ( ! empty( $subscription_levels ) ) {
 
 			if( is_string( $subscription_levels ) && $this->get_subscription_id() ) {
+<<<<<<< HEAD
 
 				switch( $subscription_levels ) {
 
@@ -662,6 +663,29 @@ class RCP_Member extends WP_User {
 
 					$ret = true;
 
+=======
+
+				switch( $subscription_levels ) {
+
+					case 'any' :
+
+						$ret = true;
+						break;
+
+					case 'any-paid' :
+
+						$ret = rcp_is_active();
+
+						break;
+				}
+
+			} else {
+
+				if( user_can( $this->ID, 'manage_options' ) ) {
+
+					$ret = true;
+
+>>>>>>> master
 				} else if ( in_array( $this->get_subscription_id(), $subscription_levels ) ) {
 
 					$needs_paid = false;
