@@ -104,15 +104,15 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 	function test_get_expiration_time() {
 
 		$this->assertFalse( $this->member->get_expiration_time() );
-		
+
 		$this->member->set_expiration_date( date( 'Y-n-d' ) );
-		
+
 		$this->assertInternalType( 'int', $this->member->get_expiration_time() );
 
 	}
 
 	function test_set_expiration_date() {
-		
+
 		$this->member->set_expiration_date( '2025-01-01 00:00:00' );
 
 		$this->assertEquals( date_i18n( get_option( 'date_format' ), strtotime( '2025-01-01 00:00:00' ) ), $this->member->get_expiration_date() );
@@ -134,11 +134,11 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 
 		// Now manually set expiration to last day of the month to force a date "walk".
 		// See https://github.com/pippinsplugins/restrict-content-pro/issues/239
-		
+
 		update_user_meta( $this->member->ID, 'rcp_expiration', date( 'Y-n-d 23:59:59', strtotime( 'October 31, 2018' ) ) );
-		
+
 		$this->member->set_status( 'active' );
-		
+
 		$expiration = $this->member->calculate_expiration();
 		$this->member->set_expiration_date( $expiration );
 		$this->assertEquals( '2018-12-01 23:59:59', date( 'Y-n-d H:i:s', $this->member->get_expiration_time() ) );
@@ -270,7 +270,7 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 		update_post_meta( $post_id, 'rcp_access_level', 3 );
 
 		$this->assertFalse( $this->member->can_access( $post_id ) );
-		
+
 		update_post_meta( $post_id, 'rcp_access_level', 1 );
 
 		$this->assertTrue( $this->member->can_access( $post_id ) );
@@ -286,7 +286,7 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 		$this->member->renew();
 
 		$this->assertTrue( $this->member->can_access( $post_id ) );
-		
+
 		$this->member->set_status( 'free' );
 
 		$this->assertFalse( $this->member->can_access( $post_id ) );
@@ -300,9 +300,9 @@ class RCP_Member_Tests extends WP_UnitTestCase {
 		update_post_meta( $post_id, 'rcp_subscription_level', array( $this->level_id_2 ) );
 
 		$this->assertFalse( $this->member->can_access( $post_id ) );
-	
+
 		update_user_meta( $this->member->ID, 'rcp_subscription_level', $this->level_id_2 );
-	
+
 		$this->assertTrue( $this->member->can_access( $post_id ) );
 	}
 }
