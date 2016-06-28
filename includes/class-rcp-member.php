@@ -307,7 +307,7 @@ class RCP_Member extends WP_User {
 			$date = date( 'Y-m-d H:i:s' );
 		}
 
-		$ret = update_user_meta( $this->ID, 'rcp_renewed_date_' . $this->get_subscription_id() );
+		$ret = update_user_meta( $this->ID, 'rcp_renewed_date_' . $this->get_subscription_id(), $date );
 
 		do_action( 'rcp_set_renewed_date', $this->ID, $date, $this );
 
