@@ -293,7 +293,7 @@ function rcp_register_form_stripe_checkout( $atts ) {
 		'data-label'             => sprintf( __( 'Join %s', 'rcp' ), $subscription->name ),
 		'data-panel-label'       => __( 'Register - {{amount}}', 'rcp' ),
 		'data-amount'            => $amount * rcp_stripe_get_currency_multiplier(),
-		'data-local'             => 'auto',
+		'data-locale'             => 'auto',
 		'data-allow-remember-me' => true,
 		'data-currency'          => rcp_get_currency(),
 		'data-alipay'            => isset( $rcp_options['stripe_alipay'] ) && '1' === $rcp_options['stripe_alipay'] && 'USD' === rcp_get_currency() ? true : false
