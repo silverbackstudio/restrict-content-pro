@@ -89,6 +89,7 @@ function rcp_save_meta_data( $post_id ) {
 
 			delete_post_meta( $post_id, 'rcp_access_level' );
 			delete_post_meta( $post_id, 'rcp_subscription_level' );
+			delete_post_meta( $post_id, 'rcp_user_level' );
 
 			break;
 
@@ -197,7 +198,9 @@ function rcp_save_meta_data( $post_id ) {
 
 	update_post_meta( $post_id, 'rcp_show_excerpt', $show_excerpt );
 	update_post_meta( $post_id, 'rcp_hide_from_feed', $hide_in_feed );
-	update_post_meta( $post_id, 'rcp_user_level', $user_role );
+	if ( 'unrestricted' !== $_POST['rcp_restrict_by'] ) {
+		update_post_meta( $post_id, 'rcp_user_level', $user_role );
+	}
 	update_post_meta( $post_id, '_is_paid', $is_paid );
 
 }
