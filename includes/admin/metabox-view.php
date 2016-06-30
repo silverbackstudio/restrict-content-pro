@@ -33,7 +33,7 @@ $role_set_display  = '' != $user_role ? '' : ' style="display:none;"';
 	</label>
 	<label for="rcp_subscription_level_any_paid">
 		<input type="radio" name="rcp_subscription_level_any_set" id="rcp_subscription_level_any_paid" value="any-paid"<?php checked( true, $set_level == 'any-paid' || ! empty( $is_paid ) ); ?>/>
-		&nbsp;<?php _e( 'Members of any non-free subscription level(s)', 'rcp' ); ?><br/>
+		&nbsp;<?php _e( 'Members of any paid subscription level(s)', 'rcp' ); ?><br/>
 	</label>
 	<label for="rcp_subscription_level_specific">
 		<input type="radio" name="rcp_subscription_level_any_set" id="rcp_subscription_level_specific" value="specific"<?php checked( true, is_array( $sub_levels ) ); ?>/>
