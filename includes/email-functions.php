@@ -256,6 +256,10 @@ function rcp_email_payment_received( $payment_id, $args ) {
 
 	global $rcp_options;
 
+	if ( isset( $rcp_options['disable_payment_received_email'] ) ) {
+		return;
+	}
+
 	$user_info = get_userdata( $args['user_id'] );
 
 	if( ! $user_info ) {
