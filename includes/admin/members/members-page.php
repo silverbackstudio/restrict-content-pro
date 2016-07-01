@@ -169,21 +169,26 @@ function rcp_members_page() {
 								</th>
 								<td class="has-row-actions column-primary" data-colname="<?php _e( 'User', 'rcp' ); ?>">
 									<strong>
-										<a href="<?php echo add_query_arg( 'user_id', $member->ID, admin_url( 'user-edit.php' ) ); ?>" title="<?php _e( 'View User\'s Profile', 'rcp' ); ?>"><?php echo $member->user_login; ?></a>
+										<a href="<?php echo esc_url( add_query_arg('edit_member', $member->ID, $current_page) ); ?>" title="<?php _e( 'Edit Member', 'rcp' ); ?>"><?php echo $member->user_login; ?></a>
 										<?php if( $member->user_login != $member->user_email ) : ?>
 											<?php echo '&nbsp;&ndash;&nbsp;' . $member->user_email; ?>
 										<?php endif; ?>
 									</strong>
 									<?php if( current_user_can( 'rcp_manage_members' ) ) : ?>
 										<div class="row-actions">
-											<span class="id"><?php echo __( 'ID:', 'rcp' ) . ' ' . $member->ID; ?></span>
-											<span class="edit"> | <a href="<?php echo esc_url( add_query_arg('edit_member', $member->ID, $current_page) ); ?>"><?php _e('Edit', 'rcp'); ?></a></span>
+											<span class="edit">
+												<a href="<?php echo esc_url( add_query_arg('edit_member', $member->ID, $current_page) ); ?>"><?php _e( 'Edit Member', 'rcp' ); ?></a>
+												<span class="rcp-separator"> | </span>
+												<a href="<?php echo esc_url( add_query_arg( 'user_id', $member->ID, admin_url( 'user-edit.php' ) ) ); ?>" title="<?php _e( 'View User\'s Profile', 'rcp' ); ?>"><?php _e( 'Edit User Account', 'rcp' ); ?></a>
+											</span>
 											<?php if( rcp_can_member_cancel( $member->ID ) ) { ?>
 												<span> | <a href="<?php echo wp_nonce_url( add_query_arg('cancel_member', $member->ID, $current_page ), 'rcp-cancel-nonce' ); ?>" class="trash rcp_cancel"><?php _e('Cancel', 'rcp'); ?></a></span>
 											<?php } ?>
 											<?php if( $switch_to_url = rcp_get_switch_to_url( $member->ID ) ) { ?>
 												<span> | <a href="<?php echo esc_url( $switch_to_url ); ?>" class="rcp_switch"><?php _e('Switch to User', 'rcp'); ?></a></span>
 											<?php } ?>
+											<span class="rcp-separator"> | </span>
+											<span class="id rcp-member-id"><?php echo __( 'ID:', 'rcp' ) . ' ' . $member->ID; ?></span>
 											<?php do_action( 'rcp_member_row_actions', $member->ID ); ?>
 										</div>
 									<?php endif; ?>
