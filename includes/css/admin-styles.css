@@ -184,6 +184,9 @@ img.help-image {
 #rcp-bulk-select-all {
 	margin: 0;
 }
+.rcp-member-id {
+	color: #555;
+}
 
 /* subscription levels page columns */
 .rcp-sub-name-col {

@@ -697,7 +697,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		try {
 
-			\Stripe\Plan::create( array(
+			$plan = \Stripe\Plan::create( array(
 				"amount"         => $price,
 				"interval"       => $interval,
 				"interval_count" => $interval_count,
@@ -707,11 +707,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			) );
 
 			// plann successfully created
-			return $plan_id;
+			return $plan->id;
 
 		} catch ( Exception $e ) {
-			// there was a problem
-			return false;
+
+			$this->handle_processing_error( $e );
 		}
 
 	}
@@ -737,17 +737,19 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 		// check if the plan new plan id structure exists
 		try {
-			\Stripe\Plan::retrieve( $new_plan_id );
-			return $new_plan_id;
+
+			$plan = \Stripe\Plan::retrieve( $new_plan_id );
+			return $plan->id;
+
 		} catch ( Exception $e ) {}
 
 		try {
 			// fall back to the old plan id structure and verify that the plan metadata also matches
 			$stripe_plan = \Stripe\Plan::retrieve( $old_plan_id );
 
-			if ( $stripe_plan->amount !== $plan->price * 100 ) {
+			if ( (int) $stripe_plan->amount !== (int) $plan->price * 100 ) {
 				return false;
-			};
+			}
 
 			if ( $stripe_plan->interval !== $plan->duration_unit ) {
 				return false;
@@ -758,6 +760,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 			}
 
 			return $old_plan_id;
+
 		} catch ( Exception $e ) {
 			return false;
 		}
