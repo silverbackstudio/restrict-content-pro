@@ -101,7 +101,7 @@ class RCP_Payment_Gateway_PayPal extends RCP_Payment_Gateway {
 			$paypal_args['a3'] = $this->amount;
 
 			if( ! empty( $this->signup_fee ) ) {
-				$paypal_args['a1'] = number_format( $this->signup_fee + $this->amount, 2 );
+				$paypal_args['a1'] = number_format( ( $this->signup_fee + $this->amount ) - $this->discount, 2 );
 			}
 
 			$paypal_args['p3'] = $this->length;
@@ -141,8 +141,11 @@ class RCP_Payment_Gateway_PayPal extends RCP_Payment_Gateway {
 		} else {
 
 			// one time payment
+			$amount = $this->amount + $this->signup_fee;
+			$amount = $amount - $this->discount;
+
 			$paypal_args['cmd'] = '_xclick';
-			$paypal_args['amount'] = round( $this->amount + $this->signup_fee, 2 );
+			$paypal_args['amount'] = round( $amount, 2 );
 
 		}
 

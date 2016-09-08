@@ -221,9 +221,13 @@ function rcp_process_registration() {
 
 		$redirect = rcp_get_return_url( $user_data['id'] );
 
+		$price           = rcp_get_registration()->get_total( false, false );
+		$proration       = rcp_get_registration()->get_proration_credits();
+		$prorated_price  = $price + $proration;
+
 		$subscription_data = array(
-			'price'             => rcp_get_registration()->get_total( true, false ), // get total without the fee
-			'discount'          => rcp_get_registration()->get_total_discounts(),
+			'price'             => $price,
+			'discount'          => rcp_get_registration()->get_total_discounts( $prorated_price ),
 			'discount_code'     => $discount,
 			'fee'               => rcp_get_registration()->get_total_fees(),
 			'length'            => $subscription->duration,
