@@ -173,6 +173,7 @@ if( version_compare( PHP_VERSION, '5.3', '<' ) ) {
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-integrations.php' );
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-levels.php' );
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-member.php' );
+	include( RCP_PLUGIN_DIR . 'includes/class-rcp-nav-menus.php' );
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-payments.php' );
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-discounts.php' );
 	include( RCP_PLUGIN_DIR . 'includes/class-rcp-registration.php' );
@@ -280,6 +281,7 @@ function rcp_register_databases() {
 	$rcp_discounts_db  = new RCP_Discounts;
 	$wpdb->levelmeta   = $rcp_levels_db->meta_db_name;
 	$wpdb->paymentmeta = $rcp_payments_db->meta_db_name;
+
 
 }
 add_action( 'plugins_loaded', 'rcp_register_databases', 11 );
