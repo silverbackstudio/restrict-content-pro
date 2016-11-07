@@ -275,7 +275,11 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				);
 
 				$rcp_payments = new RCP_Payments();
-				$rcp_payments->insert( $payment_data );
+				$payment_id   = $rcp_payments->insert( $payment_data );
+
+				if ( ! empty( $payment_id ) ) {
+					$rcp_payments->add_meta( $payment_id, 'user_ip_address', rcp_get_ip() );
+				}
 
 				$paid = true;
 
