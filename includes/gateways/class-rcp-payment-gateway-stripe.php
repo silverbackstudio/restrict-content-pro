@@ -184,8 +184,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 				// clean up any past due or unpaid subscriptions before upgrading/downgrading
 				foreach( $customer->subscriptions->all()->data as $subscription ) {
 
-					// Cancel subscriptions with the same subscription level ID and member ID.
-					if ( ! empty( $subscription->metadata ) && $this->subscription_id == $subscription->metadata['rcp_subscription_level_id'] && $this->user_id == $subscription->metadata['rcp_member_id'] ) {
+					// Cancel subscriptions with the RCP metadata present and matching member ID.
+					// @todo When we add multiple subscriptions we need to update this to only cancel subscriptions where $this->subscription_id matches the rcp_subscription_level_id in the metadata.
+					if ( ! empty( $subscription->metadata ) && ! empty( $subscription->metadata['rcp_subscription_level_id'] ) && $this->user_id == $subscription->metadata['rcp_member_id'] ) {
 						$subscription->cancel();
 						continue;
 					}
