@@ -72,27 +72,9 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 		}
 	}
 
-	if ( $atts['userlevel'] === 'admin' && ! current_user_can( 'switch_themes' ) ) {
-		$has_access = false;
-	}
-
-	if ( $atts['userlevel'] === 'editor' && ! current_user_can( 'moderate_comments' ) ) {
-		$has_access = false;
-	}
-
-	if ( $atts['userlevel'] === 'author' && ! current_user_can( 'upload_files' ) ) {
-		$has_access = false;
-	}
-
-	if ( $atts['userlevel'] === 'contributor' && ! current_user_can( 'edit_posts' ) ) {
-		$has_access = false;
-	}
-
-	if ( $atts['userlevel'] === 'subscriber' && ! current_user_can( 'read' ) ) {
-		$has_access = false;
-	}
-
 	if ( $atts['userlevel'] === 'none' && ! is_user_logged_in() ) {
+		$has_access = false;
+	} elseif ( ! current_user_can( strtolower( $atts['userlevel'] ) ) ) {
 		$has_access = false;
 	}
 
