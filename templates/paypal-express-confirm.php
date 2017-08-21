@@ -35,9 +35,9 @@ global $rcp_checkout_details; ?>
 	</thead>
 	<tbody>
 		<tr>
-			<td><?php echo $rcp_checkout_details['DESC']; ?></td>
+			<td data-th="<?php esc_attr_e( 'Subscription', 'rcp' ); ?>"><?php echo $rcp_checkout_details['DESC']; ?></td>
 			<?php if( ! empty( $_GET['rcp-recurring'] ) ) : ?>
-				<td>
+				<td data-th="<?php esc_attr_e( 'Recurs', 'rcp' ); ?>">
 					<?php
 					printf( __( 'Every %d %s', 'rcp' ),
 					    esc_html( $rcp_checkout_details['subscription']['duration'] ),
@@ -47,11 +47,11 @@ global $rcp_checkout_details; ?>
 				</td>
 			<?php endif; ?>
 			<?php if( ! empty( $_GET['rcp-recurring'] ) && ! empty( $rcp_checkout_details['subscription']['fee'] ) ) : ?>
-				<td>
+				<td data-th="<?php esc_attr_e( 'Signup Fee', 'rcp' ); ?>">
 					<?php echo rcp_currency_filter( $rcp_checkout_details['subscription']['fee'] ); ?>
 				</td>
 			<?php endif; ?>
-			<td><?php echo rcp_currency_filter( $rcp_checkout_details['PAYMENTREQUEST_0_AMT' ] ); ?></td>
+			<td data-th="<?php esc_attr_e( 'Subscription Cost', 'rcp' ); ?>"><?php echo rcp_currency_filter( $rcp_checkout_details['PAYMENTREQUEST_0_AMT' ] ); ?></td>
 		</tr>
 	</tbody>
 </table>
