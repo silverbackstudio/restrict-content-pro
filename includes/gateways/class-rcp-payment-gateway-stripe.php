@@ -181,6 +181,9 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					unset( $temp_invoice, $invoice );
 				}
 
+				// Set up array of subscriptions we cancel below so we don't try to cancel the same one twice.
+				$cancelled_subscriptions = array();
+
 				// clean up any past due or unpaid subscriptions before upgrading/downgrading
 				foreach( $customer->subscriptions->all()->data as $subscription ) {
 
@@ -188,6 +191,7 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 					// @todo When we add multiple subscriptions we need to update this to only cancel subscriptions where $this->subscription_id matches the rcp_subscription_level_id in the metadata.
 					if ( ! empty( $subscription->metadata ) && ! empty( $subscription->metadata['rcp_subscription_level_id'] ) && $this->user_id == $subscription->metadata['rcp_member_id'] ) {
 						$subscription->cancel();
+						$cancelled_subscriptions[] = $subscription->id;
 						continue;
 					}
 
@@ -201,12 +205,13 @@ class RCP_Payment_Gateway_Stripe extends RCP_Payment_Gateway {
 
 					// remove any subscriptions that are past_due or inactive
 					if ( in_array( $subscription->status, array( 'past_due', 'unpaid' ) ) ) {
+						$cancelled_subscriptions[] = $subscription->id;
 						$subscription->cancel();
 					}
 				}
 
-				// If the customer has an existing subscription, we need to cancel it
-				if( $member->just_upgraded() && $member->can_cancel() ) {
+				// If the customer has an existing subscription, we need to cancel it (if we haven't already above).
+				if( $member->just_upgraded() && $member->can_cancel() && ! in_array( $member->get_merchant_subscription_id(), $cancelled_subscriptions ) ) {
 					$cancelled = $member->cancel_payment_profile( false );
 				}
 
