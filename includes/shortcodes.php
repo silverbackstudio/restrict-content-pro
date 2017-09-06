@@ -74,8 +74,17 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 
 	if ( $atts['userlevel'] === 'none' && ! is_user_logged_in() ) {
 		$has_access = false;
-	} elseif ( ! current_user_can( strtolower( $atts['userlevel'] ) ) ) {
-		$has_access = false;
+	} elseif( 'none' != $atts['userlevel'] ) {
+		$roles = array_map( 'trim', explode( ',', $atts['userlevel'] ) );
+
+		foreach ( $roles as $role ) {
+			if ( current_user_can( strtolower( $role ) ) ) {
+				$has_access = true;
+				break;
+			} else {
+				$has_access = false;
+			}
+		}
 	}
 
 	// No access if pending email verification.
