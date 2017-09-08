@@ -74,7 +74,8 @@ function rcp_restrict_shortcode( $atts, $content = null ) {
 
 	if ( $atts['userlevel'] === 'none' && ! is_user_logged_in() ) {
 		$has_access = false;
-	} elseif( 'none' != $atts['userlevel'] ) {
+	}
+	if( 'none' != $atts['userlevel'] ) {
 		$roles = array_map( 'trim', explode( ',', $atts['userlevel'] ) );
 
 		foreach ( $roles as $role ) {
