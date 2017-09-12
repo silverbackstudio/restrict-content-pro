@@ -283,7 +283,7 @@ class RCP_Emails {
 	 * Send the email
 	 *
 	 * @since 2.7
-	 * @param string $to The To address
+	 * @param string|array $to The To address
 	 * @param string $subject The subject line of the email
 	 * @param string $message The body of the email
 	 * @param string|array $attachments Attachments to the email
