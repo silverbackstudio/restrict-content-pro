@@ -455,9 +455,9 @@ function rcp_email_admin_on_manual_payment( $member, $payment_id, $gateway ) {
 		return;
 	}
 
-	$admin_emails   = array();
-	$admin_emails[] = get_option( 'admin_email' );
-	$admin_emails   = apply_filters( 'rcp_admin_notice_emails', $admin_emails );
+	$admin_emails  = ! empty( $rcp_options['admin_notice_emails'] ) ? $rcp_options['admin_notice_emails'] : get_option('admin_email');
+	$admin_emails  = apply_filters( 'rcp_admin_notice_emails', explode( ',', $admin_emails ) );
+	$admin_emails  = array_map( 'sanitize_email', $admin_emails );
 
 	$emails             = new RCP_Emails;
 	$emails->member_id  = $member->ID;
