@@ -730,7 +730,16 @@ function rcp_settings_page() {
 								<p class="description"><?php _e('Enter your Braintree sandbox client side encryption key.', 'rcp'); ?></p>
 							</td>
 						</tr>
-
+						<?php // Manual Payment info ?>
+						<tr>
+							<th>
+								<label for="rcp_settings[manual_payment_instructions]"><?php _e( 'Manual Payment Instruction', 'rcp' ); ?></label>
+							</th>
+							<td>
+								<textarea class="regular-text" id="rcp_settings[manual_payment_instructions]" style="width: 300px;" name="rcp_settings[manual_payment_instructions]"><?php if(isset($rcp_options['manual_payment_instructions'])) { echo esc_html( $rcp_options['manual_payment_instructions'] ); } ?></textarea>
+								<p class="description"><?php _e('Enter here the informations to perform manual payments.', 'rcp'); ?></p>
+							</td>
+						</tr>
 					</table>
 					<?php do_action( 'rcp_payments_settings', $rcp_options ); ?>
 

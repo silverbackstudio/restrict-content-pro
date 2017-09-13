@@ -58,4 +58,18 @@ class RCP_Payment_Gateway_Manual extends RCP_Payment_Gateway {
 
 	}
 
+
+	/**
+	 * Format and print instructions
+	 *
+	 * @since 2.1
+	 * @return string
+	 */
+	public function fields() {
+		
+		global $rcp_options;
+	
+		return wpautop($rcp_options['manual_payment_instructions']);
+	}
+
 }
